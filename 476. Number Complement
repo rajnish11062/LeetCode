@@ -9,3 +9,29 @@ public:
         return m^num;
     }
 };
+
+/*
+class Solution {
+public:
+    int countBits(int n)
+    {
+        uint count=0;
+        if(n==0)
+            count=1;
+        while(n)
+        {
+            n=n>>1; 
+            ++count;
+        }
+        return count;
+    }
+    int findComplement(int num) {
+        int nBits = countBits(num);     
+        int res=num;
+        for(int i=0;i<nBits;i++)
+            res = res^(1<<i);
+
+        return res;
+    }
+};
+*/
