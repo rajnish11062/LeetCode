@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int numPairsDivisibleBy60(vector<int>& time) {
+        unordered_map<int,int> existingCountMap;
+        int result=0;
+        for(auto t : time){
+            t=t%60;
+            if(t !=0){
+                auto res = existingCountMap.find(60-t);
+                if( res != existingCountMap.end())
+                {
+                    result += res->second;
+                }
+            }
+            else
+            {
+                auto res = existingCountMap.find(0);
+                if( res != existingCountMap.end())
+                {
+                    result += res->second;
+                }
+            }
+            existingCountMap[t]++;
+        }
+        return result;
+    }
+};
+
