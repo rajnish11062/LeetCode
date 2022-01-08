@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool isValid(vector<vector<int>>& grid, int r ,int c1,int c2)
+    {
+        if(r>=grid.size() || c1<0 || c1>=grid[0].size() || c2<0 || c2>=grid[0].size() )
+            return false;
+        
+        return true;
+    }
+    int totalCherry(vector<vector<int>>& grid,int r,int c1, int c2,vector<vector<vector<int>>> &dp)
+    {
+        if(!isValid(grid,r,c1,c2))
+            return 0;
+        int sum=0;
+        if(dp[r][c1][c2] != -1)
+            return dp[r][c1][c2];
+        else
+        {
+            //first use current position values
+            sum += grid[r][c1];
+            if(c1 != c2)
+                sum += grid[r][c2];
+            //Go for next possible positions
+            int maxVal=0;
+            for(int i=c1-1;i<=c1+1;i++)
+            {
+                for(int j=c2-1;j<=c2+1;j++)
+                {
+                    maxVal=max(maxVal,totalCherry(grid,r+1,i,j,dp));
+                }
+            }
+            sum += maxVal;
+            dp[r][c1][c2] = sum; 
+        }    
+        return sum;     
+    }
+    int cherryPickup(vector<vector<int>>& grid) {
+        
+        int row = grid.size();
+        int col = grid[0].size();
+        vector<vector<vector<int>>> dp(row,vector<vector<int>>(col,vector<int>(col,-1)));
+        totalCherry(grid,0,0,col-1,dp);
+        return dp[0][0][col-1];
+    }
+};
