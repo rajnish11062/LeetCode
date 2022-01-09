@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isRobotBounded(string instructions) {
+        
+        vector<vector<int>> dir = {{0,1}, {-1, 0}, {0, -1}, {1,0}};
+        int currDir=0,x=0,y=0;
+        for(auto ch : instructions){
+            if(ch == 'L')                                       //     0
+                currDir = (currDir+1)%4; // move anti clock wise     1 + 3
+                                                                  //   2
+            else if(ch == 'R')
+                currDir = (currDir+3)%4;     // 3 times left turn is right turn 
+            else{
+            
+                x +=dir[currDir][0];
+                y +=dir[currDir][1];
+            }      
+        }
+       return (x==0 && y==0 || currDir != 0);  
+    }
+};
+
+
+      
+   
