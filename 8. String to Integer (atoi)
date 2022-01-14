@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+       
+        //ignore white spaces
+        int i=0;
+        while(i<s.size() && s[i]==' ')
+            i++;
+            
+        int sign=1;
+        //collect sign
+        if(i < s.size() && s[i]=='+' )
+        {
+            i++;
+        }
+        else if(i < s.size() && s[i]=='-'){  
+            sign=-1;
+            i++;
+        }
+            
+        //ignore leading zero and non digits
+       int num=0;
+       while(i < s.size() && isdigit(s[i]))
+       {
+           //check for max limit before doing 10*num 
+           if(sign==1 && num>(INT_MAX-(s[i]-'0'))/10)
+                return INT_MAX;
+           else if(sign==-1 && num > (INT_MAX-(s[i]-'0'))/10)
+               return INT_MIN;
+           num = num*10+(s[i]-'0');  
+           i++;    
+       }
+        cout<<num;
+        return num*sign;
+        
+    }
+};
