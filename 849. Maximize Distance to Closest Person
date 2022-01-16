@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxDistToClosest(vector<int>& seats) {
+     int start=0,end=0;
+        int ans=0,val=0;
+        while(end < seats.size()){
+           if (seats[end] ==0) {
+                while(end <seats.size() && seats[end] != 1)
+                    end++;
+               if(start == 0 || (end-1) == seats.size()-1)
+                    val = end-start;
+               else
+                    val = ((start-1)+(end))/2-start+1;
+               
+               ans = max(ans,val);
+            }
+            else{
+                while(end <seats.size()&&seats[end] != 0)
+                    end++;
+                start=end;
+            }
+        }
+        return ans;
+    }
+};
