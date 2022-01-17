@@ -13,18 +13,18 @@ public:
             return false;
         int i=0;
         while(i<vs.size()){   
-            if(charMap.find(pattern[i]) == charMap.end()){
-                if(usedStr[vs[i]]==true)
+            if(charMap.find(pattern[i]) == charMap.end()){   // if char is not maped
+                if(usedStr[vs[i]]==true)                     // but str is used return false
                     return false;
                 else
                 {
-                    usedStr[vs[i]]=true;
+                    usedStr[vs[i]]=true;                       //else use str and make a char-str mapping
                     charMap[pattern[i]]=vs[i];
                 }
             }
-            else
+            else                                              // if char is already maped 
             {
-                if ( charMap[pattern[i]] != vs[i])
+                if ( charMap[pattern[i]] != vs[i])            // but corresponding str is not same with previous one then return false
                     return false;
             }
             i++;
