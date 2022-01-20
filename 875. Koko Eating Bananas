@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int low =1, high=piles[0];
+        for(auto &n : piles)
+            high = max(high,n);
+        
+        while(low < high){
+            int k = (low+high)/2;
+            int totaTime=0;
+            for(auto &x : piles){
+                totaTime += x%k==0 ? x/k : x/k+1;
+            }
+            if(totaTime <= h)  // can eat within this time , go for minimum
+                high = k;
+            else
+                low = k+1;   
+        }
+        return low;
+    }
+};
