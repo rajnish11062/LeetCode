@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool detectCapitalUse(string word) {
+        bool SUCCESS=false;
+        if(std::all_of(word.begin(),word.end(),[](unsigned char ch){return std::isupper(ch);}))
+            SUCCESS=true;
+        else if(std::all_of(word.begin(),word.end(),[](unsigned char ch){return std::islower(ch);}))
+            SUCCESS=true;
+        else if(std::isupper(word[0])){
+            string w=word.substr(1);
+            if(std::all_of(w.begin(),w.end(),[](unsigned char ch){return std::islower(ch);}))
+               SUCCESS=true; 
+        }
+        return SUCCESS;
+    }
+};
