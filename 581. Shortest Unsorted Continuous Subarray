@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        
+        int n=nums.size();
+        int i=0,j=n-1,minIdx=n,maxIdx=0;
+        std::stack<int> st;
+        while(i<n)
+        {
+            while(!st.empty() && nums[st.top()] > nums[i]){
+                int ele = st.top();
+                minIdx=std::min(minIdx,ele);   
+                st.pop();
+            }
+            st.push(i);                       
+            i++;
+        }
+        
+        while(!st.empty())
+            st.pop();
+        
+        while(j>=0){
+            while(!st.empty() && nums[st.top()] < nums[j])
+            {
+                int ele = st.top();
+                maxIdx=std::max(maxIdx,ele);
+                st.pop();
+            }  
+            st.push(j);  
+            j--;
+        }                            
+        return maxIdx-minIdx > 0 ? maxIdx-minIdx+1 : 0;
+    }
+};
