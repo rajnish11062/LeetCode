@@ -1,3 +1,23 @@
+//Using map
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        int maxCount=0;
+        unordered_map<int,int> un;
+        for(auto n : nums){
+            int diff = k-n;
+            if(un[diff]>0){
+                maxCount++;
+                un[diff]--;
+            }
+            else
+                un[n]++;
+        }
+        return maxCount;
+    }
+};
+
+//Using two pointer
 class Solution {
 public:
     int maxOperations(vector<int>& nums, int k) {
@@ -5,15 +25,14 @@ public:
         int i=0,j=nums.size()-1;
         int maxCount=0;
         while(i < j){
-            
             if((nums[i] + nums[j]) > k)
                 j--;
             else if ((nums[i] + nums[j]) < k)
                 i++;
             else{
-                    maxCount++;
-                    i++;
-                    j--;
+                maxCount++;
+                i++;
+                j--;
             }
         }
         return maxCount;
