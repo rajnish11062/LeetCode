@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void solve(int n,string &vowels,vector<string> &res,int index, string &output){
+        
+        if(n==0){
+                res.push_back(output);
+            return;
+        }
+        if(index > vowels.size())
+            return;
+        
+        for(int i=index;i<vowels.size();i++){
+            
+            output += vowels[i];
+            solve(n-1,vowels,res,i,output);
+            output.pop_back();
+        }
+    }
+    int countVowelStrings(int n) {
+        string vowels = "aeiou";
+        vector<string> res;
+        string output("");
+        solve(n,vowels,res,0,output);
+        
+        return res.size();
+    }
+};
