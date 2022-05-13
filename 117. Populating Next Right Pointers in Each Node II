@@ -1,0 +1,58 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
+};
+*/
+
+class Solution {
+public:
+    Node* connect(Node* root) {
+        
+        if(!root)
+            return nullptr;
+        std::queue<Node *> Q;
+        Node *prev = nullptr;
+        Q.push(root);
+        Q.push(nullptr);
+        bool first=false;
+        while(Q.size() > 1)
+        {
+            Node *Curr = Q.front();
+            Q.pop();
+            if(Curr == nullptr){  
+                Q.push(nullptr);
+                first=true;  //to track first element
+            }
+            else
+            {
+                if(!first){
+                    if(prev)
+                        prev->next = Curr;
+                    prev=Curr;
+                }
+                else{
+                    prev=Curr;
+                    first=false;
+                }
+                
+                if(Curr->left)
+                    Q.push(Curr->left);
+                if(Curr->right)
+                    Q.push(Curr->right);
+            }   
+        }   
+        return root;
+    }
+};
