@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        
+        std::vector<vector<int>> graph[n+1];
+        std::unordered_set<int> visited;
+        //create graph 
+        for(auto gnode : times){
+            
+            int u = gnode[0];
+            int v = gnode[1];
+            int w = gnode[2];
+            graph[u].push_back({v,w});
+        }
+        //create a min_heap PQ
+        std::priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        //insert first node
+        pq.push({0,k});     
+        int total_time=0;
+        while(!pq.empty()){
+            int u = pq.top().second;
+            int time = pq.top().first;
+            pq.pop();  
+            //update total_time
+            total_time = std::max(total_time,time); 
+            for(auto vec : graph[u]){
+				if(visited.count(vec[0]))             // if already visited dont push in the queue
+                    continue;
+                pq.push({(time+vec[1]),vec[0]}); 
+            }
+            visited.insert(u); 
+            if(visited.size()==n)
+                return total_time;
+        }
+        return -1;
+    }
+};
+
