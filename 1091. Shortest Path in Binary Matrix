@@ -1,0 +1,98 @@
+
+//BFS Accepted
+class Solution {
+    int X[8] = {1,-1,0,0, 1,-1,1,-1};
+    int Y[8] = {0,0,-1,1,1,1,-1,-1};
+public:
+    bool isValid(vector<vector<int>>& grid,int x,int y){
+        
+        if(x >= 0 && x < grid.size() && y < grid[0].size() && y >=0)
+            return true;
+        
+        return false;
+    }
+   
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int minPath=1;
+        int currentCount=1;
+        if(grid[0][0] != 0 || grid[n-1][n-1] != 0)
+            return -1;
+                   
+        std::queue<pair<int, int>> bfs;
+        std::vector<vector<int>> visited(n, vector<int>(n));
+        bfs.push({0,0});
+        visited[0][0] = true;
+        while(!bfs.empty()){
+            int size = bfs.size();
+            while(size-->0){
+                int x = bfs.front().first;
+                int y = bfs.front().second;
+                bfs.pop();
+                if(x ==n-1 && y==n-1)
+                    return minPath;
+                   
+                for(int i=0;i<8;i++){
+                
+                    int newX = x+X[i];
+                    int newY= y+Y[i];
+                
+                    if(isValid(grid,newX,newY) && !grid[newX][newY] && !visited[newX][newY]){
+                        bfs.push(make_pair(newX,newY));
+                        visited[newX][newY]=true;
+                    } 
+                
+                }
+            }
+            minPath++;   
+        }
+        return -1;
+    }
+};
+
+
+//DFS TLE
+/***************
+******************
+class Solution {
+    int X[8] = {1,-1,0,0, 1,-1,1,-1};
+    int Y[8] = {0,0,-1,1,1,1,-1,-1};
+public:
+    bool isValid(vector<vector<int>>& grid,int x,int y){
+        
+        if(x >= 0 && x < grid.size() && y < grid[0].size() && y >=0)
+            return true;
+        
+        return false;
+    }
+    void shortestPath(vector<vector<int>>& grid,int &minPath,int currentCount,int x, int y,set<pair<int,int>> visited){
+        
+        if(x==grid.size()-1 && y==grid[0].size()-1){
+            if(currentCount < minPath)
+                minPath = currentCount;
+            return;
+        }
+        visited.insert(make_pair(x,y));
+        for(int i=0;i<8;i++){
+            int newX = x+X[i];
+            int newY = y+Y[i];
+            
+            if(!visited.count(make_pair(newX,newY)) && isValid(grid,newX,newY) && grid[newX][newY]==0){
+                shortestPath(grid,minPath,currentCount+1,newX,newY,visited);
+                visited.erase(make_pair(newX,newY));
+            }
+        }
+    }
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size()-1;
+        int minPath=INT_MAX;
+        int currentCount=1;
+        if(grid[0][0] != 0 || grid[n][n] != 0)
+            return -1;
+        std::set<pair<int,int>> visited;
+        shortestPath(grid,minPath,currentCount,0,0,visited);
+        return minPath==INT_MAX ? -1 : minPath;
+        
+    }
+};
+*******/ 
