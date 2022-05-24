@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        if(s.size() < 2)
+            return 0;
+        stack<int> st;
+        for(int i=0;i<s.size();i++){
+            if(s[i] == '(')
+                st.push(i); 
+            else{
+                //found a closing bracket
+                if(!st.empty() && s[st.top()] == '('){
+                    st.pop();
+                }
+                else
+                    st.push(i);
+            }
+        }
+        int maxLen = 0;
+        int len = s.size();
+        while(!st.empty()){
+            int startPoint = st.top();
+            st.pop();
+            int currLen = len-startPoint-1;
+            maxLen = max(maxLen,currLen);
+            len = startPoint;
+        }
+        //it is possible that string is already balanced 
+        return max(maxLen,len);
+    }
+};
