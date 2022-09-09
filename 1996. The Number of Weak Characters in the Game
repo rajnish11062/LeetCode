@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int numberOfWeakCharacters(vector<vector<int>>& properties) {
+        //int x=-1,y=-1;
+        std::sort(properties.begin(),properties.end(),[&](vector<int> &a,vector<int> &b){
+            if(a[0]==b[0])
+                return a[1] > b[1];
+            return a[0] < b[0];
+        });
+        int Max= INT_MIN,count=0;
+        //for(auto vec : properties){
+        for(int i =properties.size()-1; i >=0;i--){
+            vector<int> &vec = properties[i];
+            if(vec[1] < Max){
+                //if(Min != INT_MAX)
+                    count++;
+                
+            }
+            Max = max(Max,vec[1]);
+        }
+        return count;
+    }
+};
